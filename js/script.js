@@ -146,3 +146,51 @@ const targetBtns = document.querySelectorAll(".modalBtn");
 targetBtns.forEach((targetBtn) => {
     const modal = new Modal(targetBtn);
 });
+
+//scroll-up
+function scroll_effect() {
+  var element = document.getElementsByClassName('scroll-up');
+  if(!element) return;
+                      
+  var scrollY = window.pageYOffset;
+  var windowH = window.innerHeight;
+  var showTiming = 200; 
+  for(var i = 0; i < element.length; i++) { 
+    var elemClientRect = element[i].getBoundingClientRect(); 
+    var elemY = scrollY + elemClientRect.top; 
+    if(scrollY > elemY - windowH + showTiming) {
+      element[i].classList.add('is-show');
+    }
+  }
+}
+window.addEventListener('scroll', scroll_effect); //
+
+//絞り込みリスト
+$(function(){
+  var searchItem = '.tab_member';
+  var listItem = '.works .contents';
+  var hideClass = 'is-hide';
+  var activeClass = 'is-active';
+  
+  $(function() {
+      $(searchItem).on('click', function() {
+      $(searchItem).removeClass(activeClass);
+      var group = $(this).addClass(activeClass).data('group');
+      search_filter(group);
+      });
+  });
+  
+  function search_filter(group) {
+      $(listItem).removeClass(hideClass);
+      if(group === '') {
+      return;
+      }
+      for (var i = 0; i < $(listItem).length; i++) {
+          var itemData = $(listItem).eq(i).data('group');
+          if(itemData !== group) {
+              $(listItem).eq(i).addClass(hideClass);
+          }
+      }
+  } 
+  });
+  
